@@ -98,11 +98,11 @@ git push origin --tags          # отправить теги на remote
 ### Professional Workflow ###
 
 # Convention Commits
-git commit -m "feat: add user authentication"
-git commit -m "fix: resolve memory leak"
-git commit -m "docs: update API documentation"
-git commit -m "refactor: simplify database layer"
-git commit -m "test: add unit tests for service"
+git commit -m "feat: add user authentication"       # for adding new files
+git commit -m "fix: resolve memory leak"            # for changes and upgrades
+git commit -m "docs: update API documentation"      # for README.md update 
+git commit -m "refactor: simplify database layer"   # for directories decomposition
+git commit -m "test: add unit tests for service"    # for tests only
 
 # Interactive Rebase
 git rebase -i HEAD~5            # интерактивный rebase последних 5 коммитов
