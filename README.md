@@ -46,6 +46,7 @@ ci	        # CI конфигурация	                            ci: add Git
 # Daily commands:
 git add -u
 git commit -m "feat(basetypes): implement integer operations with tests"
+git commit -m "feat(leetcode): implement palindrome with two pointers method"
 git push origin dev # only admin is allowed to merge with main
 
 ### Basic workflow ###
