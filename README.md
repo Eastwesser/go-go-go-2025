@@ -30,16 +30,16 @@ Before writing a commit message, check this table:
 ```bash
 # Основные типы коммитов (types):
 
-# Type	    # Когда использовать	                        Пример
-feat	    # Новая функциональность	                    feat: add user authentication
+# Type	    # Когда использовать	                          Пример
+feat	      # Новая функциональность	                      feat: add user authentication
 fix	        # Исправление бага	                            fix: resolve memory leak in cache
-docs	    # Изменения в документации	                    docs: update API documentation
-style	    # Форматирование, пробелы	                    style: format code with gofmt
-refactor	# Рефакторинг без изменения функциональности	refactor: simplify database layer
-test	    # Добавление тестов	                            test: add unit tests for service
-chore	    # Вспомогательные задачи	                    chore: update dependencies
-build	    # Сборка системы	                            build: update Dockerfile
-ci	        # CI конфигурация	                            ci: add GitHub Actions workflow
+docs	      # Изменения в документации	                    docs: update API documentation
+style	      # Форматирование, пробелы	                      style: format code with gofmt
+refactor	  # Рефакторинг без изменения функциональности	  refactor: simplify database layer
+test	      # Добавление тестов	                            test: add unit tests for service
+chore	      # Вспомогательные задачи	                      chore: update dependencies
+build	      # Сборка системы	                              build: update Dockerfile
+ci	        # CI конфигурация	                              ci: add GitHub Actions workflow
 ```
 
 ```bash
@@ -150,10 +150,14 @@ docker run -it <image> bash         # запустить контейнер с �
 docker run -p 8080:80 <image>       # пробросить порты
 docker run -v $(pwd):/app <image>   # монтировать volume
 docker run --env VAR=value <image>  # установить environment variable
+docker exec -it container bash      # войти в контейнер
+docker exec container ls -la        # выполнить команду в контейнере
 
 # Cleanup
 docker system prune             # удалить все остановленные контейнеры, неиспользуемые образы
 docker system prune -a          # полная очистка (⚠️ осторожно!)
+docker system df                # статистика Docker диска
+docker volume prune             # очистить volumes
 ```
 
 ## Docker-Compose:
@@ -194,6 +198,9 @@ docker-compose pull                 # скачать последние обра
 docker-compose up --build                           # собрать и запустить
 docker-compose up --build -d                        # собрать и запустить в фоне
 docker-compose down && docker-compose up --build    # полный перезапуск
+docker-compose up -d --build                        # пересобрать и запустить
+docker-compose build service                        # собрать конкретный сервис
+docker-compose --env-file .env.prod up              # с переменными окружения
 ```
 
 ## Delve debugger commands:
@@ -282,6 +289,146 @@ dlv debug ./main.go
 (dlv) goroutines
 (dlv) c
 ```
+
+## Misc:
+
+Common frequently used commands:
+
+### Linux Commands
+```bash
+# Мониторинг
+htop                      # интерактивный мониторинг процессов
+df -h                     # место на дисках
+du -sh /path/to/dir       # размер директории
+free -h                   # оперативная память
+ncdu                      # анализ использования диска
+
+# Поиск
+grep -r "pattern" /dir              # рекурсивный поиск в файлах
+find /dir -name "*.log" -mtime -7   # найти файлы измененные за 7 дней
+
+# Работа с процессами
+ps aux | grep nginx       # найти процессы
+kill -9 PID               # убить процесс
+lsof -i :8080             # кто слушает порт 8080
+
+# Сеть
+netstat -tulpn            # открытые порты и процессы
+ss -tulpn                 # современный netstat
+curl ifconfig.me          # внешний IP
+dig example.com           # DNS запрос
+ping google.com           # проверка connectivity
+traceroute google.com     # трассировка маршрута
+
+# Файлы
+tail -f file.log          # следить за логом в реальном времени
+tail -100 file.log        # последние 100 строк
+head -20 file.log         # первые 20 строк
+less file.log             # просмотр с поиском
+```
+
+### cURL для API
+```bash
+# Основные запросы
+curl -X GET http://api.example.com/users
+curl -X POST http://api.example.com/users -d '{"name":"John"}'
+curl -X PUT http://api.example.com/users/1 -d '{"name":"John Doe"}'
+curl -X DELETE http://api.example.com/users/1
+
+# С заголовками
+curl -H "Content-Type: application/json" \
+     -H "Authorization: Bearer token" \
+     http://api.example.com/data
+
+# Отладка
+curl -v http://api.example.com     # verbose режим
+curl -i http://api.example.com     # показать headers ответа
+curl -o output.txt http://example.com  # сохранить в файл
+```
+
+### JSON обработка (jq)
+```bash
+# Парсинг и форматирование
+echo '{"name":"John","age":30}' | jq '.name'
+cat file.json | jq '.'                          # красивое форматирование
+cat compact.json | jq -c '.'                    # компактный формат
+jq empty < file.json || echo "Invalid JSON"     # проверка синтаксиса
+
+# Фильтрация
+jq '.users[] | {name, email}' data.json
+jq '.data | length' response.json
+jq '.items[0]' data.json                        # первый элемент
+```
+
+### Продвинутый Git
+```bash
+# Умный diff
+git diff --word-diff           # поксловное сравнение
+git diff --staged              # что добавлено в stage
+git diff branch1..branch2      # сравнить две ветки
+
+# Точечные коммиты
+git add -p                     # интерактивное добавление изменений
+git commit -p                  # коммитить выбранные изменения
+
+# Редактирование истории
+git commit --amend             # добавить изменения в последний коммит
+git rebase -i HEAD~3           # переписывать историю
+
+# Поиск в истории
+git log -S "function_name"     # когда добавили/удалили строку
+git log --grep="bugfix"        # поиск по сообщениям коммитов
+git blame file.txt             # кто и когда менял каждую строку
+```
+
+### Database Commands
+```bash
+# PostgreSQL
+psql -U user -d dbname
+\dt                            # список таблиц
+
+# Redis
+redis-cli
+KEYS *                         # все ключи
+```
+
+### Экстренные команды
+```bash
+# Когда все падает
+docker system prune -a          # очистить все Docker
+kubectl delete pod --all        # удалить все поды
+journalctl -f -u service        # системные логи сервиса
+
+# Когда не хватает места
+df -h                          # проверить место на дисках
+du -sh /var/lib/docker         # размер Docker данных
+```
+
+### Нагрузочное тестирование (Bombardier)
+```bash
+# GET запросы
+bombardier -c 100 -n 10000 http://localhost:8000/api/users
+
+# POST запросы
+bombardier -c 10 -n 1000 -m POST \
+  -H "Content-Type: application/json" \
+  -f ./test_data.json \
+  http://localhost:8000/api/create
+```
+
+### Полезные one-liners для мониторинга
+```bash
+# Мониторинг HTTP запросов
+tail -f access.log | awk '{print $1}' | sort | uniq -c
+
+# Мониторинг изменений в файлах
+watch -n 2 'ls -la | grep file'
+
+# Проверка портов (netcat)
+nc -zv hostname 80              # проверить доступность порта
+nc -zv localhost 8080           # проверить локальный порт
+```
+
 
 ## Project tree (actual for 20.09.2025):
 ```text
