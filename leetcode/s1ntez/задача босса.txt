@@ -1,0 +1,437 @@
+Say, [12.11.2025 20:14]
+Дароу, мне давал задачку ускорить ручку. 
+С нуля писал кэш, потом просил шардировать и спрашивал проблемы какие могут быть, упоминал про TTL и LRU
+
+Say, [12.11.2025 20:15]
+Ещё была задачка с слайсами. Попроси у гпт сгенерить и порешай
+
+
+Valid parenthesis
+
+
+package main
+
+import (
+  "context"
+  "encoding/json"
+  "fmt"
+  "net/http"
+  "time"
+)
+
+type OriginalUser struct {
+  ID        int     `json:"id"`
+  Email     string  `json:"email"`
+  Amount    float64 `json:"amount"`
+  Profile   Profile `json:"profile"`
+  Password  string  `json:"password"`
+  Username  string  `json:"username"`
+  CreatedAt string  `json:"createdAt"`
+  CreatedBy string  `json:"createdBy"`
+}
+
+type Profile struct {
+  Avatar     string `json:"avatar"`
+  LastName   string `json:"lastName"`
+  FirstName  string `json:"firstName"`
+  StaticData string `json:"staticData"`
+}
+
+type ModifiedUser struct {
+  ID        int      `json:"id"`
+  Email     *string  `json:"email,omitempty"`
+  Amount    float64  `json:"amount"`
+  Profile   *Profile `json:"profile,omitempty"`
+  Username  *string  `json:"username,omitempty"`
+  CreatedAt string   `json:"createdAt"`
+  CreatedBy string   `json:"createdBy"`
+}
+
+func handleUser(w http.ResponseWriter, r *http.Request) {
+  // Создаем контекст с таймаутом 5 секунд
+  ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+  defer cancel()
+  
+  // Создаем HTTP клиент с контекстом
+  client := http.Client{
+    Timeout: 10 * time.Second,
+  }
+  
+  // Создаем запрос с контекстом
+  req, err := http.NewRequestWithContext(ctx, "GET", "http://83.136.232.77:8091/users", nil)
+  if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+  
+  // Выполняем запрос
+  resp, err := client.Do(req)
+  if err != nil {
+    // Проверяем, была ли ошибка из-за таймаута контекста
+    if ctx.Err() == context.DeadlineExceeded {
+      http.Error(w, "request timeout", http.StatusGatewayTimeout)
+      return
+    }
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+  defer resp.Body.Close()
+  
+  if resp.StatusCode != http.StatusOK {
+    http.Error(w, "API request failed", resp.StatusCode)
+    return
+  }
+  
+  var origins []OriginalUser
+  if err := json.NewDecoder(resp.Body).Decode(&origins); err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+  
+  modifiedUsers := make([]ModifiedUser, 0, len(origins))
+  for _, origin := range origins {
+    select {
+    case <-ctx.Done():
+      // Если контекст отменен, прерываем обработку
+      http.Error(w, "request cancelled", http.StatusRequestTimeout)
+      return
+    default:
+      user := ModifiedUser{
+        ID:        origin.ID,
+        Amount:    origin.Amount,
+        CreatedAt: origin.CreatedAt,
+        CreatedBy: origin.CreatedBy,
+      }
+      
+      if origin.Amount <= 50000 {
+        email := origin.Email
+        username := origin.Username
+        profile := origin.Profile
+        profile.StaticData = ""
+        
+        user.Email = &email
+        user.Username = &username
+        user.Profile = &profile
+      }
+      modifiedUsers = append(modifiedUsers, user)
+    }
+  }
+  
+  w.Header().Set("Content-Type", "application/json")
+  if err := json.NewEncoder(w).Encode(modifiedUsers); err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+  }
+}
+
+func main() {
+  http.HandleFunc("/users", handleUser)
+  fmt.Println("Server running on :8082")
+  server := &http.Server{
+    Addr:         ":8082",
+    ReadTimeout:  10 * time.Second,
+    WriteTimeout: 10 * time.Second,
+  }
+  if err := server.ListenAndServe(); err != nil {
+    fmt.Println("Server error:", err)
+  }
+}
+
+
+
+
+
+Фин. босс:
+
+Первая задача: https://go.dev/play/p/TpDme9hJwV-
+За сколько исполнится и что выведется? Как ускорить?
+var count int
+
+func Inc() {
+  time.Sleep(1 * time.Millisecond)
+  count++
+}
+
+func main() {
+  for i := 0; i < 10000; i++ {
+    Inc()
+  }
+
+  fmt.Println(count)
+}
+
+Вторая задача: https://go.dev/play/p/8CtbfZOvNbQ
+func init() {
+  rand.Seed(time.Now().UnixNano())
+}
+
+// Есть функция, работающая неопределенно долго и возвращающая число.
+// Ее тело нельзя изменять (представич, что внутри сетево запрос).
+
+func unpredictableFunc() int64 {
+  rnd := rand.Int63n(5000)
+  time.Sleep(time.Duration(rnd) * time.Millisecond)
+  
+  return rnd
+}
+
+// Нужно написать функцию обертку, которая будет работать с заданным таймаутом (например, 1 секунду).
+// Если "длинная" функция отработала за это время - отлично, возвращаем результат.
+// Если нет - возвращаем ошибку. Результат работы в этом случае нам не важен.
+//
+// Дополнительно нужно измерять, сколько выполнялась эта функция (просто вывести в лог).
+
+Третья задача: https://go.dev/play/p/HUvh55GcKyp
+Что выведется в первом и втором fmt.Println и какие есть способы решения, чтобы changeName работал как нужно? (всего вроде их как 5)
+type Person struct {
+  Name string
+}
+
+func changeName(person *Person) {
+  person = &Person{
+    Name: "Alice",
+  }
+}
+
+func main() {
+  person := &Person{
+    Name: "Bob",
+  }
+
+  fmt.Println(person.Name) //
+  changeName(person)
+  fmt.Println(person.Name) //
+}
+
+Четвертая задачка: https://go.dev/play/p/x_cN-BtEb4B
+// Есть ручка weather, которая отрабатывает за ~1 секунду, нужно ускорить выполнение этой ручки.
+
+package main
+
+// aiWeatherForecast через нейронную сеть вычисляет температуру за ~1 секунду
+func aiWeatherForecast() res int {
+  //calc temp
+  return res
+}
+
+func main() {
+
+  http.HandleFunc("/weather", func(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintf(w, "{\\"temperature\\":%d}\\n", aiWeatherForecast())
+    
+  })
+  
+  if err := http.ListenAndServe(":3333", nil); err != nil {
+    panic(err)
+  }
+}
+
+Ну и спрашивал теорию:
+про метрики, с помощью чего можно измерить
+что такое индекс, какие бывают типы индексов в Postgres, какой и когда использовать
+Что такое Explane Analyze, как по Explane понять медленно или быстро работает?
+Назвать уровни изоляции транзакций, какой по умолчанию в Postgres 
+Как сделать, чтобы 3 сервиса могли работать с одной базой без конфликта?
+Рассказать про планировщик Go
+
+
+
+// Напиши  реализацию InMemory кэша
+package main
+
+import "sync"
+
+type Cache interface {
+  Set(k string, v string)
+  Get(k string) (string, bool)
+}
+type InMemoryCache struct {
+  data map[string]string
+  //mu   sync.Mutex
+  mu sync.RWMutex // Лучше обычного мьютекса sync.Mutex по скорости чтения и записи
+
+}
+
+// Так как это кэш, к нему будет конкурентный доступ, к нему будут стремиться обратиться много горутин
+// Мапа неконкурентна на запись (на чтение ок) непотокобезопасная
+
+//a := 3
+//a++
+// Три операции: вычитать, прибавить, записать
+
+func NewInMemoryCache() *InMemoryCache {
+  return &InMemoryCache{
+    make(map[string]string), // инициализация мапы
+    //sync.Mutex{},
+    sync.RWMutex{},
+  }
+}
+
+func (c *InMemoryCache) Set(k string, v string) {
+  // "(c *InMemoryCache)" - ресивер
+  // "Set(k string, v string)" - контракт
+
+  // Чтобы был конкурентный доступ к мапе, используем мьютексы
+  //c.mu.Lock()
+  //c.data[k] = v
+  //c.mu.Unlock()
+
+  c.mu.Lock()
+  defer c.mu.Unlock()
+  c.data[k] = v
+}
+
+func (c *InMemoryCache) Get(k string) (string, bool) {
+  c.mu.RLock() // RLock() из RW мьютекса нужен для ускорения массового чтения горутинами
+  // Не блокируем чтение, блокируем только запись
+  defer c.mu.RUnlock() // если проект будет разрастаться, можно через defer открывать доступ
+
+  data, ok := c.data[k] // ok сигнализирует, есль ли ключ в мапе или нет
+  if ok {
+    println("Cache hit %s", data)
+  }
+  return data, ok
+  //return c.data[k]
+  /*
+    Почему нельзя return c.data[k]?
+    Произойдет перегрузка функций:
+      - первая (?) возвращает value,
+      - вторая (?) И value, И флажок
+  */
+}
+
+func main() {
+  //cache := &InMemoryCache{} // вызовет панику, так как мы не вызвали функцию NewInMemoryCache()
+  cache := NewInMemoryCache()
+  cache.Set("foo", "bar")
+  cache.Set("baz", "qux")
+
+  // Как синхроизировать выполнение горутин? WaitGroup!!!
+  // Когда завершается main(), все горутины схлопываются, не будут выполнены
+  wg := &sync.WaitGroup{}
+  wg.Add(4)
+
+  // когда запускается функция - определит планировщик. go означает, что мы кладем функцию в очередь
+  go func() {
+    defer wg.Done()
+    cache.Set("foo", "upd_bar")
+    println("1")
+  }()
+
+  go func() {
+    defer wg.Done()
+    cache.Set("baz", "upd_qux")
+    println("2")
+  }()
+
+  go func() {
+    defer wg.Done()
+    cache.Get("foo")
+    println("3")
+  }()
+
+  go func() {
+    defer wg.Done()
+    cache.Get("bar")
+    println("4")
+  }()
+
+  wg.Wait() // пока счетчик не будет 0, мы выполняем горутины
+
+  data, ok := cache.Get("foo")
+  //if ok {
+  //  fmt.Println(data)
+  //} else {
+  //  fmt.Println("Not found") // с else некрасиво, println = alias for fmt.Println
+  //}
+
+  if !ok {
+    println("Key: Not found")
+    return
+  }
+  println("Key: foo, Value: ", data)
+}
+
+
+
+что такое индекс, какие бывают типы индексов в Postgres, какой и когда использовать
+Что такое Explane Analyze, как по Explane понять медленно или быстро работает?
+Назвать уровни изоляции транзакций, какой по умолчанию в Postgres 
+Как сделать, чтобы 3 сервиса могли работать с одной базой без конфликта?
+
+
+Вопросы к ревью:
+
+  
+
+Мониторинг, метрики, трейсинг
+Как собираете метрики и какие?
+Какие метрики можно подключить в Go? (вопрос про метрики pprof).
+Как реализовать собственную метрику?
+Какой threshold выставить для сбора метрик?
+Как выставить threshold для бизнесовых метрик? (обычно аналитики приносят готовые требования).
+Используете ли трейсинг и как используете? Что используете для визуализации трейсинга? (говорим про Jaeger).
+При написании бенчмарков никогда не заставлял мак аллоцировать доп объем памяти? 
+Приходилось заставлять железо работать на ограничкнном кол-ве памяти и ограниченном кол-ве горутин?(интересный факт гомакспрокс на маках не работает, поэтому вопрос про железку)(надо углубиться в докерфайл) 
+Теория БД
+Что такое индексы, типы индексов в постгрес и когда какой использовать. какие применял в работе?
+btree индекс в pg - устройство и в чем сбалансированность
+профилирование запросов, explain analyze, как по explain-у понять, медленно или быстро, красные флаги в выводе explain, когда медленно
+Уровни изоляции транзакций, какая по умолчанию в постгрес, аномалии и блокировки
+Оптимистичные и пессемистичные блокировки, когда применять оптимистичные
+Как сделать, чтоб три сервиса могли работать с одной базой без конфликтов. Ответ: select for update
+Чем where отличается от having
+Теория Брокеры сообщения
+что такое партиции в кафке и для чего они нужны?
+можно ли убавить число партиций или увеличить
+виды гарантий доставки сообщений в кафке (at least once, at most once, exactly once)
+если консьюмер упал то как обработать сообщение заново (просто написать в лог, если сообщение не важное, важное обработать заново через оффсет или dead latter queue)
+что такое consumer lag в кафке
+По ОС:
+Как убить процесс
+Потоки и процессы, в чем разница
+Что происходит, когда приложение запрашивает 1кб памяти
+Что будет, если нет столько памяти
+По go:
+Какими линтерами пользовался?
+Как часто нолинк применял?
+Кодогенерация, кроме прото?
+Некоторые линтеры плохо понимают кодогенерацию, что делать?
+Вопрос №1** Что такое горутины в Go и как они соотносятся с потоками операционной системы?
+Basic
+
+Легковесность
+Переключение происходит на уровне приложения (user space)
+GOMAXPROCS - Это переменная, которая определяет количество потоков ОС, которые могут одновременно выполнять горутины
+Знает про M:N модель - где M горутин мапятся на N потоков ОС.
+Advanced
+
+Горутины могут переключаться в определенных точках, например, при вызове функции, которая может блокировать выполнение
+Если горутина выполняет блокирующий системный вызов, она может занять отдельный поток ОС
+Начальный размер стека горутины составляет порядка 2 КБ, и он может динамически увеличиваться
+Переключение потоков ОС требует сохранения и восстановления регистров, что более затратно по сравнению с переключением горутин
+Утечки можно обнаружить с помощью профилирования и анализа кода, например, с помощью pprof
+Expert
+
+Go использует планировщик, который управляет привязкой горутин к процессорам (P) и использует глобальную очередь для распределения горутин
+Вопрос №2 Чем занимается runtime в Go?
+Управляет потоками ОС, которые выполняют горутины
+Планировщик распределяет горутины между доступными потоками
+Менеджмент памяти
+Сборка мусора
+Вопрос №3 За счет чего Go позволяет работать с большим количеством сетевых соединений одновременно?
+Basic
+
+Netpoll, неблокирующие сокеты
+Advanced
+
+Epoll, kqueue, IOCP
+Epoll более эффективен, чем select и poll, так как он не требует повторной регистрации всех дескрипторов
+Можно регистрировать события, такие как чтение, запись и ошибки
+Вопрос №4 Что такое каналы?
+Basic
+
+Примитив синхронизации между горутинами
+Буферизованные и небуферизованные
+Оператор select позволяет горутине ожидать на нескольких каналах одновременно, выбирая тот, который готов к операции
+Каналы реализованы как структуры, содержащие указатели на буфер, счетчики и блокировки для управления доступом
+Advanced

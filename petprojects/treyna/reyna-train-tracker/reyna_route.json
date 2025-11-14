@@ -1,0 +1,530 @@
+{
+  "city_0001": {
+    "name": "Москва",
+    "timeArrive": "22:10",
+    "stand": "20мин",
+    "timeDepart": "22:30"
+  },
+  "city_0002": {
+    "name": "Владимир Пасс",
+    "timeArrive": "1:10",
+    "stand": "26мин",
+    "timeDepart": "01:36"
+  },
+  "city_0003": {
+    "name": "Ковров 1",
+    "timeArrive": "02:17",
+    "stand": "2мин",
+    "timeDepart": "02:19"
+  },
+  "city_0004": {
+    "name": "Нижний Новгород Московский (Московский вокзал)",
+    "timeArrive": "04:12",
+    "stand": "12мин",
+    "timeDepart": "04:24"
+  },
+  "city_0005": {
+    "name": "Семенов",
+    "timeArrive": "05:19",
+    "stand": "2мин",
+    "timeDepart": "05:21"
+  },
+  "city_0006": {
+    "name": "Киров Пасс",
+    "timeArrive": "10:30",
+    "stand": "15мин",
+    "timeDepart": "10:45"
+  },
+  "city_0007": {
+    "name": "Зуевка",
+    "timeArrive": "12:07",
+    "stand": "2мин",
+    "timeDepart": "12:09"
+  },
+  "city_0008": {
+    "name": "Глазов",
+    "timeArrive": "14:43",
+    "stand": "2мин",
+    "timeDepart": "14:45"
+  },
+  "city_0009": {
+    "name": "Балезино",
+    "timeArrive": "15:25",
+    "stand": "28мин",
+    "timeDepart": "15:53"
+  },
+  "city_0010": {
+    "name": "Пермь 2",
+    "timeArrive": "20:13",
+    "stand": "20мин",
+    "timeDepart": "20:33"
+  },
+  "city_0011": {
+    "name": "Екатеринбург-Пассажирс",
+    "timeArrive": "01:45",
+    "stand": "35мин",
+    "timeDepart": "02:20"
+  },
+  "city_0012": {
+    "name": "Тюмень",
+    "timeArrive": "07:19",
+    "stand": "19мин",
+    "timeDepart": "07:38"
+  },
+  "city_0013": {
+    "name": "Омск-Пассажирский",
+    "timeArrive": "15:05",
+    "stand": "18мин",
+    "timeDepart": "15:23"
+  },
+  "city_0014": {
+    "name": "Татарская",
+    "timeArrive": "18:16",
+    "stand": "2мин",
+    "timeDepart": "18:18"
+  },
+  "city_0015": {
+    "name": "Озеро-Карачинское",
+    "timeArrive": "18:58",
+    "stand": "5мин",
+    "timeDepart": "19:03"
+  },
+  "city_0016": {
+    "name": "Барабинск",
+    "timeArrive": "20:10",
+    "stand": "30мин",
+    "timeDepart": "20:40"
+  },
+  "city_0017": {
+    "name": "Новосибирск-Главный",
+    "timeArrive": "23:50",
+    "stand": "1ч",
+    "timeDepart": "00:50"
+  },
+  "city_0018": {
+    "name": "Юрга 1",
+    "timeArrive": "02:51",
+    "stand": "2мин",
+    "timeDepart": "02:53"
+  },
+  "city_0019": {
+    "name": "Яшкино",
+    "timeArrive": "03:30",
+    "stand": "2мин",
+    "timeDepart": "03:32"
+  },
+  "city_0020": {
+    "name": "Тайга",
+    "timeArrive": "03:56",
+    "stand": "30мин",
+    "timeDepart": "04:26"
+  },
+  "city_0021": {
+    "name": "Анжерская",
+    "timeArrive": "04:56",
+    "stand": "16мин",
+    "timeDepart": "05:12"
+  },
+  "city_0022": {
+    "name": "Яя",
+    "timeArrive": "05:33",
+    "stand": "5мин",
+    "timeDepart": "05:38"
+  },
+  "city_0023": {
+    "name": "Мариинск",
+    "timeArrive": "06:51",
+    "stand": "34мин",
+    "timeDepart": "07:25"
+  },
+  "city_0024": {
+    "name": "Тяжин",
+    "timeArrive": "08:18",
+    "stand": "1мин",
+    "timeDepart": "08:19"
+  },
+  "city_0025": {
+    "name": "Боготол",
+    "timeArrive": "09:20",
+    "stand": "2мин",
+    "timeDepart": "09:22"
+  },
+  "city_0026": {
+    "name": "Ачинск 1",
+    "timeArrive": "10:21",
+    "stand": "3мин",
+    "timeDepart": "10:24"
+  },
+  "city_0027": {
+    "name": "Красноярск Пасс",
+    "timeArrive": "13:15",
+    "stand": "21мин",
+    "timeDepart": "13:36"
+  },
+  "city_0028": {
+    "name": "Уяр",
+    "timeArrive": "15:29",
+    "stand": "2мин",
+    "timeDepart": "15:31"
+  },
+  "city_0029": {
+    "name": "Заозерная",
+    "timeArrive": "16:04",
+    "stand": "3мин",
+    "timeDepart": "16:07"
+  },
+  "city_0030": {
+    "name": "Канск-Енисейский",
+    "timeArrive": "17:12",
+    "stand": "3мин",
+    "timeDepart": "17:15"
+  },
+  "city_0031": {
+    "name": "Иланская",
+    "timeArrive": "17:43",
+    "stand": "17мин",
+    "timeDepart": "18:00"
+  },
+  "city_0032": {
+    "name": "Ингашская",
+    "timeArrive": "18:32",
+    "stand": "1мин",
+    "timeDepart": "18:33"
+  },
+  "city_0033": {
+    "name": "Решоты",
+    "timeArrive": "19:11",
+    "stand": "2мин",
+    "timeDepart": "19:13"
+  },
+  "city_0034": {
+    "name": "Юрты",
+    "timeArrive": "20:48",
+    "stand": "1мин",
+    "timeDepart": "20:49"
+  },
+  "city_0035": {
+    "name": "Тайшет",
+    "timeArrive": "21:14",
+    "stand": "3мин",
+    "timeDepart": "21:17"
+  },
+  "city_0036": {
+    "name": "Нижнеудинск",
+    "timeArrive": "23:43",
+    "stand": "13мин",
+    "timeDepart": "23:56"
+  },
+  "city_0037": {
+    "name": "Тулун",
+    "timeArrive": "01:29",
+    "stand": "2мин",
+    "timeDepart": "01:31"
+  },
+  "city_0038": {
+    "name": "Зима",
+    "timeArrive": "03:28",
+    "stand": "27мин",
+    "timeDepart": "03:55"
+  },
+  "city_0039": {
+    "name": "Залари",
+    "timeArrive": "04:44",
+    "stand": "2мин",
+    "timeDepart": "04:46"
+  },
+  "city_0040": {
+    "name": "Черемхово",
+    "timeArrive": "05:44",
+    "stand": "2мин",
+    "timeDepart": "05:46"
+  },
+  "city_0041": {
+    "name": "Усолье-Сибирское",
+    "timeArrive": "06:43",
+    "stand": "2мин",
+    "timeDepart": "06:45"
+  },
+  "city_0042": {
+    "name": "Ангарск",
+    "timeArrive": "07:59",
+    "stand": "3мин",
+    "timeDepart": "07:16"
+  },
+  "city_0043": {
+    "name": "Иркутск-Сорт",
+    "timeArrive": "07:59",
+    "stand": "2мин",
+    "timeDepart": "08:01"
+  },
+  "city_0044": {
+    "name": "Иркутск Пассажирский",
+    "timeArrive": "08:14",
+    "stand": "43мин",
+    "timeDepart": "08:57"
+  },
+  "city_0045": {
+    "name": "Слюдянка 1",
+    "timeArrive": "11:30",
+    "stand": "2мин",
+    "timeDepart": "11:32"
+  },
+  "city_0046": {
+    "name": "Байкальск",
+    "timeArrive": "12:13",
+    "stand": "2мин",
+    "timeDepart": "12:15"
+  },
+  "city_0047": {
+    "name": "Мысовая",
+    "timeArrive": "14:26",
+    "stand": "2мин",
+    "timeDepart": "14:28"
+  },
+  "city_0048": {
+    "name": "Улан-Удэ Пасс",
+    "timeArrive": "16:56",
+    "stand": "23мин",
+    "timeDepart": "17:19"
+  },
+  "city_0049": {
+    "name": "Заудинский",
+    "timeArrive": "17:32",
+    "stand": "2мин",
+    "timeDepart": "17:34"
+  },
+  "city_0050": {
+    "name": "Новоильинский",
+    "timeArrive": "18:48",
+    "stand": "2мин",
+    "timeDepart": "18:50"
+  },
+  "city_0051": {
+    "name": "Петровский Завод",
+    "timeArrive": "20:35",
+    "stand": "2мин",
+    "timeDepart": "20:37"
+  },
+  "city_0052": {
+    "name": "Бада",
+    "timeArrive": "22:26",
+    "stand": "2мин",
+    "timeDepart": "22:28"
+  },
+  "city_0053": {
+    "name": "Хилок",
+    "timeArrive": "23:30",
+    "stand": "21мин",
+    "timeDepart": "23:51"
+  },
+  "city_0054": {
+    "name": "Хушенга",
+    "timeArrive": "00:33",
+    "stand": "1мин",
+    "timeDepart": "00:34"
+  },
+  "city_0055": {
+    "name": "Харагун",
+    "timeArrive": "00:56",
+    "stand": "1мин",
+    "timeDepart": "00:57"
+  },
+  "city_0056": {
+    "name": "Могзон",
+    "timeArrive": "1:49",
+    "stand": "1мин",
+    "timeDepart": "01:50"
+  },
+  "city_0057": {
+    "name": "Чита 2",
+    "timeArrive": "04:25",
+    "stand": "36мин",
+    "timeDepart": "05:01"
+  },
+  "city_0058": {
+    "name": "Карымская",
+    "timeArrive": "07:02",
+    "stand": "18мин",
+    "timeDepart": "07:20"
+  },
+  "city_0059": {
+    "name": "Солнцевая",
+    "timeArrive": "09:18",
+    "stand": "2мин",
+    "timeDepart": "09:20"
+  },
+  "city_0060": {
+    "name": "Шилка-Пасс.",
+    "timeArrive": "10:01",
+    "stand": "2мин",
+    "timeDepart": "10:03"
+  },
+  "city_0061": {
+    "name": "Приисковая",
+    "timeArrive": "10:46",
+    "stand": "2мин",
+    "timeDepart": "10:48"
+  },
+  "city_0062": {
+    "name": "Куэнга",
+    "timeArrive": "11:28",
+    "stand": "2мин",
+    "timeDepart": "11:30"
+  },
+  "city_0063": {
+    "name": "Чернышевск-Забайкальск",
+    "timeArrive": "12:38",
+    "stand": "30мин",
+    "timeDepart": "13:08"
+  },
+  "city_00644": {
+    "name": "Жирекен",
+    "timeArrive": "13:58",
+    "stand": "2мин",
+    "timeDepart": "14:00"
+  },
+  "city_0065": {
+    "name": "Зилово",
+    "timeArrive": "14:36",
+    "stand": "2мин",
+    "timeDepart": "14:38"
+  },
+  "city_0066": {
+    "name": "Ксеньевская ",
+    "timeArrive": "16:54",
+    "stand": "2мин",
+    "timeDepart": "16:56"
+  },
+  "city_0067": {
+    "name": "Могоча",
+    "timeArrive": "18:56",
+    "stand": "25мин",
+    "timeDepart": "19:21"
+  },
+  "city_0068": {
+    "name": "Амазар",
+    "timeArrive": "20:58",
+    "stand": "2мин",
+    "timeDepart": "21:00"
+  },
+  "city_0069": {
+    "name": "Ерофей Павлович",
+    "timeArrive": "22:54",
+    "stand": "21мин",
+    "timeDepart": "23:15"
+  },
+  "city_0070": {
+    "name": "Уруша",
+    "timeArrive": "01:05",
+    "stand": "2мин",
+    "timeDepart": "01:07"
+  },
+  "city_0071": {
+    "name": "Сковородино",
+    "timeArrive": "02:54",
+    "stand": "46мин",
+    "timeDepart": "03:40"
+  },
+  "city_0072": {
+    "name": "Талдан",
+    "timeArrive": "05:30",
+    "stand": "1мин",
+    "timeDepart": "05:31"
+  },
+  "city_0073": {
+    "name": "Магдагачи",
+    "timeArrive": "07:16",
+    "stand": "15мин",
+    "timeDepart": "07:31"
+  },
+  "city_0074": {
+    "name": "Тыгда",
+    "timeArrive": "08:46",
+    "stand": "3мин",
+    "timeDepart": "08:49"
+  },
+  "city_0075": {
+    "name": "Шимановская",
+    "timeArrive": "11:21",
+    "stand": "2мин",
+    "timeDepart": "11:23"
+  },
+  "city_0076": {
+    "name": "Ледяная",
+    "timeArrive": "12:04",
+    "stand": "2мин",
+    "timeDepart": "12:06"
+  },
+  "city_0077": {
+    "name": "Свободный",
+    "timeArrive": "12:41",
+    "stand": "5мин",
+    "timeDepart": "12:46"
+  },
+  "city_0078": {
+    "name": "Серышево",
+    "timeArrive": "13:23",
+    "stand": "2мин",
+    "timeDepart": "13:25"
+  },
+  "city_0079": {
+    "name": "Белогорск",
+    "timeArrive": "13:52",
+    "stand": "44мин",
+    "timeDepart": "14:36"
+  },
+  "city_0080": {
+    "name": "Поздеевка",
+    "timeArrive": "15:37",
+    "stand": "1мин",
+    "timeDepart": "15:38"
+  },
+  "city_0081": {
+    "name": "Екатеринославка",
+    "timeArrive": "16:05",
+    "stand": "2мин",
+    "timeDepart": "16:07"
+  },
+  "city_0082": {
+    "name": "Завитая",
+    "timeArrive": "16:49",
+    "stand": "2мин",
+    "timeDepart": "16:51"
+  },
+  "city_0083": {
+    "name": "Бурея",
+    "timeArrive": "17:31",
+    "stand": "2мин",
+    "timeDepart": "17:33"
+  },
+  "city_0084": {
+    "name": "Архара",
+    "timeArrive": "18:25",
+    "stand": "2мин",
+    "timeDepart": "18:27"
+  },
+  "city_0085": {
+    "name": "Облучье",
+    "timeArrive": "21:36",
+    "stand": "15мин",
+    "timeDepart": "21:51"
+  },
+  "city_0086": {
+    "name": "Известковая",
+    "timeArrive": "22:39",
+    "stand": "1мин",
+    "timeDepart": "22:40"
+  },
+  "city_0087": {
+    "name": "Биробиджан 1",
+    "timeArrive": "00:25",
+    "stand": "7мин",
+    "timeDepart": "00:32"
+  },
+  "city_0088": {
+    "name": "Хабаровск 1",
+    "timeArrive": "03:02",
+    "stand": "30мин",
+    "timeDepart": "03:32"
+  }
+}
